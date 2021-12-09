@@ -1,6 +1,6 @@
 class FormInput extends HTMLInputElement {
     constructor() {
-        super(); 
+        super();
     }
 
     checkValidity() {
@@ -22,10 +22,16 @@ window.customElements.define('form-input', FormInput, {extends: 'input'});
 class Email extends FormInput {
     constructor() {
         super();
+
+        this.addEventListener('input', () => {
+            this.checkValidity();
+        })
     }
 
     checkValidity() {
+        console.log('checkValidity()');
         if (super.checkValidity()) {
+            console.log('passed 1st check');
             return super.checkMinLength();
         } else 
         return false;
