@@ -24,7 +24,11 @@ class Email extends FormInput {
         super();
 
         this.addEventListener('input', () => {
-            this.checkValidity();
+           if (!this.checkValidity()) {
+               this.setCustomValidity("Please input an email address.");
+           } else {
+               this.setCustomValidity("");
+           }
         })
     }
 
@@ -33,8 +37,29 @@ class Email extends FormInput {
         if (super.checkValidity()) {
             console.log('passed 1st check');
             return super.checkMinLength();
-        } else 
-        return false;
+        } else return false;
     };
 }
 window.customElements.define('email-input', Email, {extends: 'input'});
+
+class Zipcode extends FormInput {
+    constructor() {
+        super();
+
+        this.addEventListener('change', () => {
+            // check validity
+            console.log('running event listener'); 
+            this.setCustomValidity("Testing 1 2 3");
+        });
+
+        this.textContent = "hello world";
+
+    }
+
+    checkValidity() {
+        if (super.checkValidity()) {
+            return super.containsNumbers();
+        } else return false;
+    }
+}
+window.customElements.define('zipcode-input', Zipcode, {extends: 'input'});

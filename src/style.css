@@ -6,3 +6,11 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+input:invalid {
+    background-color: red;
+}
+
+input:valid {
+    background-color: none;
+}
