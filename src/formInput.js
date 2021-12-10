@@ -52,24 +52,9 @@ class Email extends FormInput {
     }
 
     validate() {
-        console.log("validate running"); 
-        if (this.validity.typeMismatch) {
-            console.log("setting custom validity");
-            this.setCustomValidity("Please enter an E MAIL...");
-        } else {
-            this.setCustomValidity("");
-        }
-        this.reportValidity(); 
+        super.validate();   
     }
     
-    checkValidity() {
-        console.log('checkValidity()');
-        console.log(super.checkValidity());
-        if (super.checkValidity()) {
-            console.log('passed 1st check');
-            return true;
-        } else return false;
-    };
 }
 window.customElements.define('email-input', Email, {extends: 'input'});
 
@@ -87,10 +72,40 @@ class Zipcode extends FormInput {
         super.validate();
     }
 
-    checkValidity() {
-        if (super.checkValidity()) {
-            return super.containsNumbers();
-        } else return false;
+}; 
+window.customElements.define('zipcode-input', Zipcode, {extends: 'input'});
+
+class Password extends FormInput {
+    constructor() {
+        super();
+        this.seen = false;
+
+        // Toggles seen if field has been clicked 
+        this.addEventListener('focus', () => {
+            this.seen = true;
+            console.log(this.seen);
+        })
+
+        this.addEventListener('input', () => {
+            this.validate();
+        });
+    }
+
+    validate() {
+        const passwords = document.querySelectorAll(".pwd");
+
+        console.log(passwords[0].value);
+        console.log(passwords[1].value); 
+        
+        // if both fields have been focused and passwords match, clear validity
+        if (passwords[0].seen && passwords[1].seen && passwords[0].value === passwords[1].value) {
+            this.setCustomValidity("");
+        } else if (!passwords[0].seen || !passwords[1].seen){
+            this.setCustomValidity("");
+        } else {
+            this.setCustomValidity("Passwords must match!")
+        }
+        this.reportValidity();  
     }
 }
-window.customElements.define('zipcode-input', Zipcode, {extends: 'input'});
+window.customElements.define('password-input', Password, {extends: 'input'});
