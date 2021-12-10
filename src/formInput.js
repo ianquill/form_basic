@@ -9,12 +9,9 @@ class FormInput extends HTMLInputElement {
         if (this.validity.typeMismatch) {
             console.log("setting custom validity");
             this.setCustomValidity("Please enter an E MAIL...");
-        } else if (this.validity.patternMismatch) {
-            this.setCustomValidity("Please enter a N2MB3R");
         } else {
             this.setCustomValidity("");
         }
-        this.reportValidity(); 
     }
 
     checkValidity() {
@@ -53,10 +50,31 @@ class Email extends FormInput {
 
     validate() {
         super.validate();   
+        this.reportValidity();
     }
     
 }
 window.customElements.define('email-input', Email, {extends: 'input'});
+
+class Country extends FormInput {
+    constructor() {
+        super();
+
+        this.addEventListener('input', () => {
+            this.validate();
+        }); 
+    }
+
+    validate() {
+        super.validate();
+
+        if (this.validity.patternMismatch) {
+            this.setCustomValidity("Country name can only contain letters a-z.");
+        }
+        this.reportValidity();
+    }
+}
+window.customElements.define('country-form', Country, {extends: 'input'}); 
 
 class Zipcode extends FormInput {
     constructor() {
@@ -70,6 +88,11 @@ class Zipcode extends FormInput {
 
     validite() {
         super.validate();
+
+        if (this.validity.patternMismatch) {
+        this.setCustomValidity("Please enter a 5 digit N2MB3R");
+    }
+    this.reportValidity(); 
     }
 
 }; 
