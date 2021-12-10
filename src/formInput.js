@@ -4,7 +4,7 @@ class FormInput extends HTMLInputElement {
     }
 
     checkValidity() {
-        super.checkValidity();
+        return super.checkValidity();
     }
 
     //returns true if the input contains a number
@@ -23,20 +23,33 @@ class Email extends FormInput {
     constructor() {
         super();
 
-        this.addEventListener('input', () => {
+        this.addEventListener('input', (e) => {
            if (!this.checkValidity()) {
-               this.setCustomValidity("Please input an email address.");
+               console.log("hello");
+               // this.setCustomValidity("This is a custom message.");
+            //    this.reportValidity();
+            //    e.preventDefault();
            } else {
                this.setCustomValidity("");
+               this.reportValidity();
            }
+        })
+        this.addEventListener('change', (e) => {
+            if (!this.checkValidity()) {
+                // this.setCustomValidity("Testing testing 1 2 3...");
+            } else {
+                this.setCustomValidity("");
+                this.reportValidity();
+            }
         })
     }
 
     checkValidity() {
         console.log('checkValidity()');
+        console.log(super.checkValidity());
         if (super.checkValidity()) {
             console.log('passed 1st check');
-            return super.checkMinLength();
+            return true;
         } else return false;
     };
 }
@@ -46,14 +59,11 @@ class Zipcode extends FormInput {
     constructor() {
         super();
 
-        this.addEventListener('change', () => {
+        this.addEventListener('input', () => {
             // check validity
             console.log('running event listener'); 
             this.setCustomValidity("Testing 1 2 3");
         });
-
-        this.textContent = "hello world";
-
     }
 
     checkValidity() {
