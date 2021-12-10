@@ -9,7 +9,7 @@
 </head>
 <body>
     <h1>Basic Form</h1>
-    <form class="form">
+    <form autocomplete="off" class="form">
         <label for="email">Email</label>
         <input is="email-input" type="email" id="email">
 
@@ -17,7 +17,7 @@
         <input id="country">
 
         <label for="zipcode">Zip Code</label>
-        <input is="zipcode-input" type="number" id="zipcode">
+        <input is="zipcode-input" pattern="[0-9]{5}" type="text" id="zipcode">
 
         <label for="pwd">Password</label>
         <input type="password" id="pwd" >

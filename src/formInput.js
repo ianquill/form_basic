@@ -3,6 +3,20 @@ class FormInput extends HTMLInputElement {
         super();
     }
 
+    validate() {
+        console.log("validate running");
+        console.log(this);
+        if (this.validity.typeMismatch) {
+            console.log("setting custom validity");
+            this.setCustomValidity("Please enter an E MAIL...");
+        } else if (this.validity.patternMismatch) {
+            this.setCustomValidity("Please enter a N2MB3R");
+        } else {
+            this.setCustomValidity("");
+        }
+        this.reportValidity(); 
+    }
+
     checkValidity() {
         return super.checkValidity();
     }
@@ -23,27 +37,31 @@ class Email extends FormInput {
     constructor() {
         super();
 
+        // Instead of checkValidity, I need to do more direct checks of specific validity parameters
         this.addEventListener('input', (e) => {
-           if (!this.checkValidity()) {
-               console.log("hello");
-               // this.setCustomValidity("This is a custom message.");
-            //    this.reportValidity();
-            //    e.preventDefault();
-           } else {
-               this.setCustomValidity("");
-               this.reportValidity();
-           }
+            this.validate();
         })
-        this.addEventListener('change', (e) => {
-            if (!this.checkValidity()) {
-                // this.setCustomValidity("Testing testing 1 2 3...");
-            } else {
-                this.setCustomValidity("");
-                this.reportValidity();
-            }
-        })
+        // this.addEventListener('change', (e) => {
+        //     if (!this.checkValidity()) {
+        //         // this.setCustomValidity("Testing testing 1 2 3...");
+        //     } else {
+        //         this.setCustomValidity("");
+        //         this.reportValidity();
+        //     }
+        // })
     }
 
+    validate() {
+        console.log("validate running"); 
+        if (this.validity.typeMismatch) {
+            console.log("setting custom validity");
+            this.setCustomValidity("Please enter an E MAIL...");
+        } else {
+            this.setCustomValidity("");
+        }
+        this.reportValidity(); 
+    }
+    
     checkValidity() {
         console.log('checkValidity()');
         console.log(super.checkValidity());
@@ -61,9 +79,12 @@ class Zipcode extends FormInput {
 
         this.addEventListener('input', () => {
             // check validity
-            console.log('running event listener'); 
-            this.setCustomValidity("Testing 1 2 3");
+            this.validate();
         });
+    }
+
+    validite() {
+        super.validate();
     }
 
     checkValidity() {
