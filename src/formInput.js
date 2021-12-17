@@ -4,10 +4,7 @@ class FormInput extends HTMLInputElement {
     }
 
     validate() {
-        console.log("validate running");
-        console.log(this);
         if (this.validity.typeMismatch) {
-            console.log("setting custom validity");
             this.setCustomValidity("Please enter an E MAIL...");
         } else {
             this.setCustomValidity("");
@@ -38,14 +35,6 @@ class Email extends FormInput {
         this.addEventListener('input', (e) => {
             this.validate();
         })
-        // this.addEventListener('change', (e) => {
-        //     if (!this.checkValidity()) {
-        //         // this.setCustomValidity("Testing testing 1 2 3...");
-        //     } else {
-        //         this.setCustomValidity("");
-        //         this.reportValidity();
-        //     }
-        // })
     }
 
     validate() {
@@ -116,9 +105,6 @@ class Password extends FormInput {
 
     validate() {
         const passwords = document.querySelectorAll(".pwd");
-
-        console.log(passwords[0].value);
-        console.log(passwords[1].value); 
         
         // if both fields have been focused and passwords match, clear validity
         if (passwords[0].seen && passwords[1].seen && passwords[0].value === passwords[1].value) {
